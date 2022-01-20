@@ -1,4 +1,6 @@
 ﻿using OctoPrint.API.Models;
+using OctoPrint.API.Models.Responses;
+using OctoPrint.API.Models.Responses.Server;
 using System;
 
 namespace OctoPrint.API
@@ -9,13 +11,12 @@ namespace OctoPrint.API
         private string _accessToken { get; set; }
 
         public PrintHead PrintHead { get; set; }
+        public Self Self { get; set; }
 
         public Printer(string apiUrl, string accessToken)
         {
             _apiUrl = apiUrl;
             _accessToken = accessToken;
         }
-
-
     }
 }
