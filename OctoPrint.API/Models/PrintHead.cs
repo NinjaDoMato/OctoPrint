@@ -25,6 +25,7 @@ namespace OctoPrint.API.Models
         /// <param name="z">Z axis position</param>
         /// <param name="speed">Movement speed id mm/s</param>
         /// <param name="absolute">Determines if the position is absolute or relative to the current position</param>
+        /// <returns>IResponse with types: string, Exception.</returns>
         public async Task<IResponse> SetPosition(int x, int y, int z, int speed = 30, bool absolute = true)
         {
             try
@@ -45,26 +46,27 @@ namespace OctoPrint.API.Models
 
                 if (result.StatusCode == (int)HttpStatusCode.NoContent)
                 {
-                    return new Response<object>
+                    return new Response<string>
                     {
-                        Code = (int)HttpStatusCode.NoContent
+                        Code = (int)HttpStatusCode.NoContent,
+                        Data = "Command executed successfully."
                     };
                 }
                 else
                 {
-                    return new Error
+                    return new Response<Exception>
                     {
                         Code = (int)result.StatusCode,
-                        ErrorMessage = GetErrorMessage(result.StatusCode)
+                        Data = new Exception(GetErrorMessage(result.StatusCode))
                     };
                 }
             }
             catch(Exception ex)
             {
-                return new Error
+                return new Response<Exception>
                 {
                     Code = 500,
-                    ErrorMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message,
+                    Data = ex
                 };
             }
         }

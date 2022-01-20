@@ -17,6 +17,9 @@ namespace OctoPrint.API
         {
             _apiUrl = apiUrl;
             _accessToken = accessToken;
+
+            Self = new Self(_apiUrl, _accessToken);
+            PrintHead = new PrintHead(_apiUrl, _accessToken);
         }
     }
 }

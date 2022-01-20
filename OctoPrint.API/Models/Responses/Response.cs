@@ -10,9 +10,10 @@ namespace OctoPrint.API.Models.Responses
     {
         public int Code { get; set; }
         public T Data { get; set; }
-        public T GetContent<T>()
+        public Type Type { get; set; } = typeof(T);
+        public T1 GetContent<T1>()
         {
-            return (T)Convert.ChangeType(Data, typeof(T));
+            return (T1)Convert.ChangeType(Data, typeof(T1));
         }
     }
 }

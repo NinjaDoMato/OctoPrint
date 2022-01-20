@@ -15,7 +15,11 @@ namespace OctoPrint.API.Models
     {
         public Self(string apiUrl, string accessToken) : base(apiUrl, accessToken) { }
 
-        public async Task<IResponse> GetState()
+        /// <summary>
+        /// Retrieves the current state of the printer.
+        /// </summary>
+        /// <returns>IResponse with types: PrinterStateResponse, Exception.</returns>
+        public async Task<IResponse> GetState(bool teste)
         {
             try
             {
@@ -25,16 +29,16 @@ namespace OctoPrint.API.Models
 
                 return new Response<PrinterStateResponse>
                 {
-                    Data = result,
+                    Data = new PrinterStateResponse(),
                     Code = 200,
                 };    
             }
             catch (Exception ex)
             {
-                return new Error
+                return new Response<Exception>
                 {
                     Code = 500,
-                    ErrorMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message,
+                    Data = ex,
                 };
             }
         }
