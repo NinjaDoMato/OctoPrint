@@ -3,10 +3,6 @@ using Flurl.Http;
 using OctoPrint.API.Models.Responses;
 using OctoPrint.API.Models.Responses.Server;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace OctoPrint.API.Models

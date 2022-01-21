@@ -1,14 +1,11 @@
-﻿using OctoPrint.API.Models.Requests;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Flurl;
+﻿using Flurl;
 using Flurl.Http;
-using System.Net;
+using OctoPrint.API.Models.Requests;
 using OctoPrint.API.Models.Responses;
 using OctoPrint.API.Models.Responses.Server;
+using System;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace OctoPrint.API.Models
 {
@@ -76,7 +73,7 @@ namespace OctoPrint.API.Models
                 {
                     return new Response<Exception>
                     {
-                        Code = (int)result.StatusCode,
+                        Code = result.StatusCode,
                         Data = new Exception(GetErrorMessage(result.StatusCode))
                     };
                 }
@@ -120,7 +117,7 @@ namespace OctoPrint.API.Models
                 {
                     return new Response<Exception>
                     {
-                        Code = (int)result.StatusCode,
+                        Code = result.StatusCode,
                         Data = new Exception(GetErrorMessage(result.StatusCode))
                     };
                 }
@@ -164,7 +161,7 @@ namespace OctoPrint.API.Models
                 {
                     return new Response<Exception>
                     {
-                        Code = (int)result.StatusCode,
+                        Code = result.StatusCode,
                         Data = new Exception(GetErrorMessage(result.StatusCode))
                     };
                 }
