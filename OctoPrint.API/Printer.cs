@@ -13,6 +13,7 @@ namespace OctoPrint.API
         public PrintHead PrintHead { get; set; }
         public Self Self { get; set; }
         public Bed Bed { get; set; }
+        public Sd Sd { get; set; }
 
         public Printer(string apiUrl, string accessToken)
         {
@@ -22,6 +23,7 @@ namespace OctoPrint.API
             Self = new Self(_apiUrl, _accessToken);
             PrintHead = new PrintHead(_apiUrl, _accessToken);
             Bed = new Bed(_apiUrl, _accessToken);
+            Sd = new Sd(_apiUrl, _accessToken);
         }
     }
 }

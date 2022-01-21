@@ -33,7 +33,7 @@ namespace OctoPrint.API.Models.Responses.Server
         public TempData Bed { get; set; }
     }
 
-    public class Sd
+    public class SdState
     {
         public bool Ready { get; set; }
     }
