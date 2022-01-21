@@ -8,7 +8,7 @@
 
 > An implementation of the Octoprint REST API, granting access to printer functions in a simple way.
 
-### Ajustes e melhorias
+### Work in progress
 
 This project still in development, the next updates will focus on:
 
