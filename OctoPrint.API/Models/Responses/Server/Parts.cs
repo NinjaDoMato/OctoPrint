@@ -8,25 +8,29 @@ namespace OctoPrint.API.Models.Responses.Server
 {
     public class Temperature
     {
-        public Tool Tool0 { get; set; }
-        public Tool Tool1 { get; set; }
-        public Tool Bed { get; set; }
+        public TempData Tool0 { get; set; }
+        public TempData Tool1 { get; set; }
+        public TempData Bed { get; set; }
         public IList<History> History { get; set; }
     }
 
-    public class Tool
+    public class TempData
     {
         public decimal Actual { get; set; }
         public decimal Target { get; set; }
-        public int Offset { get; set; }
+    }
+
+    public class ToolTempData : TempData
+    {
+        public decimal Offset { get; set; }
     }
 
     public class History
     {
         public int Time { get; set; }
-        public Tool Tool0 { get; set; }
-        public Tool Tool1 { get; set; }
-        public Tool Bed { get; set; }
+        public TempData Tool0 { get; set; }
+        public TempData Tool1 { get; set; }
+        public TempData Bed { get; set; }
     }
 
     public class Sd
@@ -51,5 +55,11 @@ namespace OctoPrint.API.Models.Responses.Server
         public bool Error { get; set; }
         public bool Ready { get; set; }
         public bool ClosedOrError { get; set; }
+    }
+
+    public class BedHistory
+    {
+        public int Time { get; set; }
+        public TempData Bed { get; set; }
     }
 }

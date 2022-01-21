@@ -29,7 +29,7 @@ namespace OctoPrint.API.Models
 
                 return new Response<PrinterStateResponse>
                 {
-                    Data = new PrinterStateResponse(),
+                    Data = result,
                     Code = 200,
                 };    
             }
