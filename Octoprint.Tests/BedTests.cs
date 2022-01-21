@@ -12,7 +12,7 @@ namespace Octoprint.Tests
     {
         private Printer _printer = new Printer("http://raspberrypi.local", "E0F37A2615CE4F1E9BE28BFBB4E5A8E6");
 
-
+         
         [TestMethod]
         public async Task ValidGetState()
         {
