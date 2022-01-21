@@ -32,12 +32,64 @@ namespace OctoPrint.API.Models
                     X = x,
                     Y = y,
                     Z = z,
-                    Speed = speed,
+                    Speed = speed * 60,
                     Absolute = absolute,
-                    Command = "Jog",
+                    Axes = new System.Collections.Generic.List<string> { "x", "y", "z" },
+                    Command = "jog",
                 };
 
-                var request = _apiURL.AppendPathSegment("/api/printer/printhead");
+                var request = _apiURL.AppendPathSegment("/api/printer/printhead")
+                    .WithHeader("X-Api-Key", _accessToken);
+
+                var result = await request.PostJsonAsync(requestBody);
+
+                if (result.StatusCode == (int)HttpStatusCode.NoContent)
+                {
+                    return new Response<string>
+                    {
+                        Code = (int)HttpStatusCode.NoContent,
+                        Data = "Command executed successfully."
+                    };
+                }
+                else
+                {
+                    return new Response<Exception>
+                    {
+                        Code = result.StatusCode,
+                        Data = new Exception(GetErrorMessage(result.StatusCode))
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Response<Exception>
+                {
+                    Code = 500,
+                    Data = ex
+                };
+            }
+        }
+
+        /// <summary>
+        /// Home the print head
+        /// </summary>
+        /// <param name="homeAll"> Home all axis, if false will home only Y and X ax</param>
+        /// <returns>IResponse with types: string, Exception.</returns>
+        public async Task<IResponse> Home(bool homeAll = true)
+        {
+            try
+            {
+                var requestBody = new PrintHeadCommand
+                {
+                    Axes = new System.Collections.Generic.List<string> { "x", "y"},
+                    Command = "home",
+                };
+
+                if (homeAll)
+                    requestBody.Axes.Add("z");
+
+                var request = _apiURL.AppendPathSegment("/api/printer/printhead")
+                    .WithHeader("X-Api-Key", _accessToken);
 
                 var result = await request.PostJsonAsync(requestBody);
 

@@ -31,7 +31,8 @@ namespace OctoPrint.API.Models
                     Target = temp
                 };
 
-                var request = _apiURL.AppendPathSegment("/api/printer/bed");
+                var request = _apiURL.AppendPathSegment("/api/printer/bed")
+                    .WithHeader("X-Api-Key", _accessToken);
 
                 var result = await request.PostJsonAsync(requestBody);
 
@@ -74,7 +75,8 @@ namespace OctoPrint.API.Models
             {
                 var request = _apiURL.AppendPathSegment("/api/printer/bed")
                     .SetQueryParam("limit", limit)
-                    .SetQueryParam("history", history);
+                    .SetQueryParam("history", history)
+                    .WithHeader("X-Api-Key", _accessToken);
 
                 var result = await request.GetJsonAsync<PrinterBedResponse>();
 

@@ -21,9 +21,8 @@ namespace OctoPrint.API.Models
         {
             try
             {
-                var request = _apiURL.AppendPathSegment("/api/printer/printhead")
-                    .SetQueryParam("limit", limit)
-                    .SetQueryParam("history", history);
+                var request = _apiURL.AppendPathSegment("/api/printer")
+                    .WithHeader("X-Api-Key", _accessToken);
 
                 var result = await request.GetJsonAsync<PrinterStateResponse>();
 

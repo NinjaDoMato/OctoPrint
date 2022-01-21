@@ -24,7 +24,8 @@ namespace OctoPrint.API.Models
         {
             try
             {
-                var request = _apiURL.AppendPathSegment("/api/printer/sd");
+                var request = _apiURL.AppendPathSegment("/api/printer/sd")
+                    .WithHeader("X-Api-Key", _accessToken);
 
                 var result = await request.GetJsonAsync<SdStateResponse>();
 
@@ -57,7 +58,8 @@ namespace OctoPrint.API.Models
                     Command = "init",
                 };
 
-                var request = _apiURL.AppendPathSegment("/api/printer/sd");
+                var request = _apiURL.AppendPathSegment("/api/printer/sd")
+                    .WithHeader("X-Api-Key", _accessToken);
 
                 var result = await request.PostJsonAsync(requestBody);
 
@@ -101,7 +103,8 @@ namespace OctoPrint.API.Models
                     Command = "release",
                 };
 
-                var request = _apiURL.AppendPathSegment("/api/printer/sd");
+                var request = _apiURL.AppendPathSegment("/api/printer/sd")
+                    .WithHeader("X-Api-Key", _accessToken);
 
                 var result = await request.PostJsonAsync(requestBody);
 
@@ -145,7 +148,8 @@ namespace OctoPrint.API.Models
                     Command = "refresh",
                 };
 
-                var request = _apiURL.AppendPathSegment("/api/printer/sd");
+                var request = _apiURL.AppendPathSegment("/api/printer/sd")
+                    .WithHeader("X-Api-Key", _accessToken);
 
                 var result = await request.PostJsonAsync(requestBody);
 
