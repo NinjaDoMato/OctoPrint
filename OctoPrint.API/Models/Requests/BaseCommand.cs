@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace OctoPrint.API.Models.Requests
 {
-    public class BedCommand : BaseCommand
+    public class BaseCommand
     {
-        public decimal Target { get; set; }
+        public string Command { get; set; }
     }
 }

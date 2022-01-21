@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OctoPrint.API.Models.Requests
+namespace OctoPrint.API.Models.Responses.Server
 {
-    public class BedCommand : BaseCommand
+    public class SdStateResponse
     {
-        public decimal Target { get; set; }
+        public bool Ready { get; set; }
     }
 }

@@ -18,12 +18,16 @@ namespace OctoPrint.API.Models
         /// <summary>
         /// Retrieves the current state of the printer.
         /// </summary>
+        /// <param name="limit">Limit to history data.</param>
+        /// <param name="history">Retrieve history data.</param>
         /// <returns>IResponse with types: PrinterStateResponse, Exception.</returns>
-        public async Task<IResponse> GetState(bool teste)
+        public async Task<IResponse> GetState(int limit = 5, bool history = true)
         {
             try
             {
-                var request = _apiURL.AppendPathSegment("/api/printer/printhead");
+                var request = _apiURL.AppendPathSegment("/api/printer/printhead")
+                    .SetQueryParam("limit", limit)
+                    .SetQueryParam("history", history);
 
                 var result = await request.GetJsonAsync<PrinterStateResponse>();
 
@@ -31,7 +35,7 @@ namespace OctoPrint.API.Models
                 {
                     Data = result,
                     Code = 200,
-                };    
+                };
             }
             catch (Exception ex)
             {

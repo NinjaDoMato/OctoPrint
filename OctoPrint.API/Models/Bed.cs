@@ -68,12 +68,16 @@ namespace OctoPrint.API.Models
         /// <summary>
         /// Retrieves the current state of the print bed.
         /// </summary>
+        /// <param name="limit">Limit to history data.</param>
+        /// <param name="history">Retrieve history data.</param>
         /// <returns>IResponse with types: PrinterBedResponse, Exception.</returns>
-        public async Task<IResponse> GetState(bool teste)
+        public async Task<IResponse> GetState(int limit = 5, bool history = true)
         {
             try
             {
-                var request = _apiURL.AppendPathSegment("/api/printer/bed");
+                var request = _apiURL.AppendPathSegment("/api/printer/bed")
+                    .SetQueryParam("limit", limit)
+                    .SetQueryParam("history", history);
 
                 var result = await request.GetJsonAsync<PrinterBedResponse>();
 

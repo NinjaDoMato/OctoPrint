@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace OctoPrint.API.Models.Requests
 {
-    internal class PrintHeadCommand
+    internal class PrintHeadCommand : BaseCommand
     {
-        public string Command { get; set; }
         public List<string> Axes { get; set; }
         public bool Absolute { get; set; }
         public int Speed { get; set; }
