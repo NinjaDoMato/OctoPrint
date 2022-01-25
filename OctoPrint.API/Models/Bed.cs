@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace OctoPrint.API.Models
 {
-    public class Bed : PrinterPart
+    public class Bed : Configurable
     {
         public Bed(string apiUrl, string accessToken) : base(apiUrl, accessToken)
         {

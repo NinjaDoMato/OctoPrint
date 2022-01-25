@@ -1,7 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+	  <PackageId>Octoprint.API</PackageId>
+	  <Version>1.1.1</Version>
+	  <Authors>Daniel Deda</Authors>
   </PropertyGroup>
 
   <ItemGroup>
