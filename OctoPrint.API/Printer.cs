@@ -6,6 +6,7 @@ namespace OctoPrint.API
     public class Printer
     {
         private readonly IJobService _jobService;
+        private readonly IFileService _fileService;
         private string _apiUrl { get; set; }
         private string _accessToken { get; set; }
 
@@ -25,6 +26,7 @@ namespace OctoPrint.API
             Sd = new Sd(_apiUrl, _accessToken);
 
             _jobService = new JobService(apiUrl, accessToken);
+            _fileService = new FileService(apiUrl, accessToken);
         }
     }
 }

@@ -22,10 +22,29 @@ namespace OctoPrint.API.Services
         Task<IResponse> GetCurrentJob();
 
         /// <summary>
-        /// Start a job for the currentselected file, returns 409 if a job is already running
+        /// Pauses the current running job
         /// </summary>
         /// <returns>IResponse with types: JobDetails, Exception.</returns>
-        Task<IResponse> StartJob();
+        Task<IResponse> Pause();
+
+        /// <summary>
+        /// Cancel the current running job
+        /// </summary>
+        /// <returns>IResponse with types: JobDetails, Exception.</returns>
+        Task<IResponse> Cancel();
+
+        /// <summary>
+        /// Resume the current paused job
+        /// </summary>
+        /// <returns>IResponse with types: JobDetails, Exception.</returns>
+        Task<IResponse> Resume();
+
+
+        /// <summary>
+        /// Start the job for the current selected file
+        /// </summary>
+        /// <returns>IResponse with types: JobDetails, Exception.</returns>
+        Task<IResponse> Start();
     }
 
     public class JobService : Configurable, IJobService
@@ -33,7 +52,7 @@ namespace OctoPrint.API.Services
         public JobService(string apiURL, string accessToken) : base(apiURL, accessToken)
         { }
 
-        public async Task<IResponse> GetCurrentJob()
+        public async Task<IResponse> Start()
         {
             try
             {
@@ -43,11 +62,22 @@ namespace OctoPrint.API.Services
 
                 var response = await request.PostJsonAsync(new BaseCommand { Command = "start" });
 
-                return new Response<JobDetails>
+                if (response.StatusCode == (int)HttpStatusCode.NoContent)
                 {
-                    Data = JsonConvert.DeserializeObject<JobDetails>(response.ResponseMessage.Content.ReadAsStringAsync().Result),
-                    Code = response.StatusCode
-                };
+                    return new Response<string>
+                    {
+                        Code = (int)HttpStatusCode.NoContent,
+                        Data = "Command executed successfully."
+                    };
+                }
+                else
+                {
+                    return new Response<Exception>
+                    {
+                        Code = response.StatusCode,
+                        Data = new Exception(GetErrorMessage(response.StatusCode))
+                    };
+                }
             }
             catch (Exception ex)
             {
@@ -59,7 +89,118 @@ namespace OctoPrint.API.Services
             }
         }
 
-        public async Task<IResponse> StartJob()
+        public async Task<IResponse> Pause()
+        {
+            try
+            {
+                var request = _apiURL
+                    .AppendPathSegment("/api/job")
+                    .WithHeader("X-Api-Key", _accessToken);
+
+                var response = await request.PostJsonAsync(new JobCommand { Command = "pause", Action = "pause" });
+
+                if (response.StatusCode == (int)HttpStatusCode.NoContent)
+                {
+                    return new Response<string>
+                    {
+                        Code = (int)HttpStatusCode.NoContent,
+                        Data = "Command executed successfully."
+                    };
+                }
+                else
+                {
+                    return new Response<Exception>
+                    {
+                        Code = response.StatusCode,
+                        Data = new Exception(GetErrorMessage(response.StatusCode))
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Response<Exception>
+                {
+                    Code = 500,
+                    Data = ex,
+                };
+            }
+        }
+
+        public async Task<IResponse> Cancel()
+        {
+            try
+            {
+                var request = _apiURL
+                    .AppendPathSegment("/api/job")
+                    .WithHeader("X-Api-Key", _accessToken);
+
+                var response = await request.PostJsonAsync(new BaseCommand { Command = "cancel" });
+
+                if (response.StatusCode == (int)HttpStatusCode.NoContent)
+                {
+                    return new Response<string>
+                    {
+                        Code = (int)HttpStatusCode.NoContent,
+                        Data = "Command executed successfully."
+                    };
+                }
+                else
+                {
+                    return new Response<Exception>
+                    {
+                        Code = response.StatusCode,
+                        Data = new Exception(GetErrorMessage(response.StatusCode))
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Response<Exception>
+                {
+                    Code = 500,
+                    Data = ex,
+                };
+            }
+        }
+
+        public async Task<IResponse> Resume()
+        {
+            try
+            {
+                var request = _apiURL
+                    .AppendPathSegment("/api/job")
+                    .WithHeader("X-Api-Key", _accessToken);
+
+                var response = await request.PostJsonAsync(new JobCommand { Command = "pause", Action = "resume" });
+
+                if (response.StatusCode == (int)HttpStatusCode.NoContent)
+                {
+                    return new Response<string>
+                    {
+                        Code = (int)HttpStatusCode.NoContent,
+                        Data = "Command executed successfully."
+                    };
+                }
+                else
+                {
+                    return new Response<Exception>
+                    {
+                        Code = response.StatusCode,
+                        Data = new Exception(GetErrorMessage(response.StatusCode))
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Response<Exception>
+                {
+                    Code = 500,
+                    Data = ex,
+                };
+            }
+        }
+
+        public async Task<IResponse> GetCurrentJob()
         {
             try
             {
