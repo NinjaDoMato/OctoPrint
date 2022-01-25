@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace OctoPrint.API.Models
 {
-    public class Sd : PrinterPart
+    public class Sd : Configurable
     {
 
         public Sd(string apiUrl, string accessToken) : base(apiUrl, accessToken)

@@ -2,12 +2,12 @@
 
 namespace OctoPrint.API.Models
 {
-    public class PrinterPart
+    public class Configurable
     {
         protected string _apiURL { get; set; }
         protected string _accessToken { get; set; }
 
-        public PrinterPart(string apiURL, string accessToken)
+        public Configurable(string apiURL, string accessToken)
         {
             _accessToken = accessToken;
             _apiURL = apiURL;

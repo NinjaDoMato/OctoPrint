@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctoPrint.API.Models
 {
-    public class Self : PrinterPart
+    public class Self : Configurable
     {
         public Self(string apiUrl, string accessToken) : base(apiUrl, accessToken) { }
 
